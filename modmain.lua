@@ -129,26 +129,21 @@ do
         return string.sub(String, 1, string.len(Start)) == Start
     end
 
-    local function ParsingCMD(message, whisper)
+    local function ParsingCMD(message)
         local msg = string.lower(message)
-        local whisp = string.lower(whisper)
         if MSG_TABLE[msg] ~= nil then
             return MSG_TABLE[msg]
         end
-        if MSG_TABLE[whisp] ~= nil then
-            return MSG_TABLE[whisp]
-        end
-        if (msg and stringstarts(msg, '#')) or (whisp and stringstarts(whisp, '#')) then
+        if msg and stringstarts(msg, '#') then
             return -1
         end
-
         return 0
     end
 
     local network_say_d = _G.Networking_Say
-    _G.Networking_Say = function(guid, userid, name, prefab, message, colour, whisper, ...)
-        local result = network_say_d(guid, userid, name, prefab, message, colour, whisper, ...)
-        local cmd = ParsingCMD(message, whisper)
+    _G.Networking_Say = function(guid, userid, name, prefab, message, ...)
+        local result = network_say_d(guid, userid, name, prefab, message, ...)
+        local cmd = ParsingCMD(message)
         local player = GetPlayerById(userid)
         if not player then
             return result

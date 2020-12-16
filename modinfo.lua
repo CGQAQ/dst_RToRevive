@@ -1,6 +1,6 @@
-name = "R to revive"
+name = "Better revival"
 author = "CG"
-version = "1.2.1"
+version = "1.2.3"
 description = [[send #R to revive and recover
 send #RR to revive only
 send #RS to reselect charactor
