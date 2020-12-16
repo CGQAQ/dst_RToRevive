@@ -1,11 +1,16 @@
-name = "R to revive"
+name = "R键复活"
 author = "CG"
-version = "1.2.1"
-description = [[send #R to revive and recover
-send #RR to revive only
-send #RS to reselect charactor
-send #GG to commit suicide
-ALL COMMANDS ABOVE IS CASE INSENSITIVE]]
+version = "1.2"
+description = [[
+1.2: #r现在会重置黑血
+1.1: 修复大写不识别bug
+按Y(公聊)或U(私聊)输入指令：
+#R来复活并回满状态
+#RR来复活
+#RS来重选人物
+#GG来自杀
+以上指令均不区分大小写
+]]
 
 icon_atlas = "modicon.xml"
 icon = "icon.tex"
@@ -22,8 +27,8 @@ server_only_mod = true
 configuration_options = {
     {
 		name = "MOD_WELCOME_TIPS_DURATION",
-		label = "Welcome tips show duration",
-		hover = "Setting the welcome tips and help tips show duration, default is 4 secs",
+		label = "帮助信息显示（秒）",
+		hover = "设置帮助信息显示时间，默认为四秒",
 		options =
 		{
 			{description = "1", data = 1},

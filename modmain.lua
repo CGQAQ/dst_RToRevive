@@ -10,14 +10,12 @@ if not (TheNet and TheNet:GetIsServer()) then
 end
 
 local wtipsduration = GetModConfigData('MOD_WELCOME_TIPS_DURATION')
-local wtips = [[提示：
-按Y(公聊)或U(私聊)输入指令：
-#R来复活并回满状态
-#RR来复活
-#RS来重选人物
-#GG来自杀
-以上指令均不区分大小写
-    ]]
+local wtips = [[What you need to know:
+send #R to revive and recover
+send #RR to revive only
+send #RS to reselect charactor
+send #GG to commit suicide
+ALL COMMANDS ABOVE IS CASE INSENSITIVE]]
 do
     AddComponentPostInit(
         'playerspawner',
@@ -33,7 +31,7 @@ do
                         function(player)
                             if player.components and player.components.talker then
                                 player.components.talker:Say(
-                                    player:GetDisplayName() .. ', 你好！\n' .. wtips,
+                                    player:GetDisplayName() .. ', Hello! Welcome to use this mod!\n' .. wtips,
                                     wtipsduration
                                 )
                             end
@@ -103,6 +101,7 @@ do
                     local components = player.components
                     if components.health then
                         components.health:SetPercent(1)
+                        components.health:SetPenalty(0)
                     end
                     if components.sanity then
                         components.sanity:SetPercent(1)
@@ -131,13 +130,15 @@ do
     end
 
     local function ParsingCMD(message, whisper)
-        if MSG_TABLE[message] ~= nil then
-            return MSG_TABLE[message]
+        local msg = string.lower(message)
+        local whisp = string.lower(whisper)
+        if MSG_TABLE[msg] ~= nil then
+            return MSG_TABLE[msg]
         end
-        if MSG_TABLE[whisper] ~= nil then
-            return MSG_TABLE[whisper]
+        if MSG_TABLE[whisp] ~= nil then
+            return MSG_TABLE[whisp]
         end
-        if (message and stringstarts(message, '#')) or (whisper and stringstarts(whisper, '#')) then
+        if (msg and stringstarts(msg, '#')) or (whisp and stringstarts(whisp, '#')) then
             return -1
         end
 
@@ -163,7 +164,7 @@ do
         elseif cmd == 4 then
             KillSpawn(player)
         elseif cmd == -1 then
-            Say(player, '指令不存在！\n' .. wtips)
+            Say(player, 'Command do not exist!\n' .. wtips)
         end
     end
 end
