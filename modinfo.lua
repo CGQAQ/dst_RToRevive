@@ -1,6 +1,6 @@
 name = "Better revival"
 author = "CG"
-version = "1.2.3"
+version = "1.3.0"
 description = [[send #R to revive and recover
 send #RR to revive only
 send #RS to reselect charactor
@@ -37,6 +37,17 @@ configuration_options = {
 			{description = "9", data = 9},
 			{description = "10", data = 10},
 		},
-		default = 4,
+		default = 5,
+	},
+	{
+		name = "MOD_DONT_DROP",
+		label = "Don't drop anything(except first slot)",
+		hover = "Will drop your item in first slot so that your teammate can resurrect you.",
+		options = 
+		{
+			{description = "ON", data = "on"},
+			{description = "OFF", data = "off"},
+		},
+		default = "on",
 	},
 }

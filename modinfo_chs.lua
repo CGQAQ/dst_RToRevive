@@ -1,7 +1,10 @@
-name = "R键复活"
+name = "更好的复活"
 author = "CG"
-version = "1.2"
+version = "1.3.0"
 description = [[
+1.3.0: 增加了死亡不掉落功能，注意不要和其他类似功能的ｍｏｄ同时使用
+1.2.5: 游戏内提示重新改为中文
+1.2.3: 修复饥荒更新后发送消息游戏会崩溃bug
 1.2: #r现在会重置黑血
 1.1: 修复大写不识别bug
 按Y(公聊)或U(私聊)输入指令：
@@ -42,6 +45,17 @@ configuration_options = {
 			{description = "9", data = 9},
 			{description = "10", data = 10},
 		},
-		default = 4,
+		default = 5,
+	},
+	{
+		name = "MOD_DONT_DROP",
+		label = "死亡不掉落（会掉落第一个格子里的东西）",
+		hover = "掉落第一个格子里的东西，以便于队友帮你复活",
+		options = 
+		{
+			{description = "开", data = "on"},
+			{description = "关", data = "off"},
+		},
+		default = "on",
 	},
 }

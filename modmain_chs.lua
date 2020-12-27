@@ -19,23 +19,22 @@ function _if(cond, a, b)
     end
 end
 
-local MOD_NAME = "Better revival"
+local MOD_NAME = "更好的复活"
 
-STRINGS.NAMES.BR_SUICIDE = "[" .. MOD_NAME .. ": suicide]"
-STRINGS.NAMES.BR_RESURRECT = "[" .. MOD_NAME .. ": resurrect]"
-local DONT_DROP = _if(GetModConfigData('MOD_DONT_DROP') == 'on', true, false)
-
+STRINGS.NAMES.BR_SUICIDE = MOD_NAME .. "：自杀"
+STRINGS.NAMES.BR_RESURRECT = MOD_NAME .. "：复活"
 local wtipsduration = GetModConfigData('MOD_WELCOME_TIPS_DURATION')
-
-local wtips = "What you need to know:\n"
+local DONT_DROP = _if(GetModConfigData('MOD_DONT_DROP') == 'on', true, false)
+local wtips = "提示:\n"
 if DONT_DROP then
-    wtips = wtips .. "You enabled don't drop anything feature!\n"
+    wtips = wtips .. "您已开启死亡不掉落！\n"
 end
-wtips = wtips .. [[send #R to revive and recover
-send #RR to revive only
-send #RS to reselect charactor
-send #GG to commit suicide
-ALL COMMANDS ABOVE IS CASE INSENSITIVE]]
+wtips = wtips .. [[按Y(公聊)或U(私聊)输入指令：
+#R来复活并回满状态
+#RR来复活
+#RS来重选人物
+#GG来自杀
+以上指令均不区分大小写]]
 do
     --- HOOKS
     --- Player just enter in game
@@ -53,7 +52,7 @@ do
                         function(player)
                             if player.components and player.components.talker then
                                 player.components.talker:Say(
-                                    player:GetDisplayName() .. ', Hello! Welcome to use this mod!\n' .. wtips,
+                                    player:GetDisplayName() .. ', 你好! 欢迎使用这个MOD!\n' .. wtips,
                                     wtipsduration
                                 )
                             end
@@ -63,6 +62,7 @@ do
             )
         end
     )
+
     --- inventory hook
     AddComponentPostInit("inventory", function(Inventory, inst)
         local realDropEverything = Inventory.DropEverything
@@ -72,21 +72,21 @@ do
         local function CGDoDrop(ondeath)
             local item = Inventory.itemslots[1]
             if item ~= nil then
-                print((item.name .." droped."))
+                print((item.name .." droped"))
                 Inventory:DropItem(item, true, true)
             end
         end
 
         function Inventory:DropEverything(ondeath, keepequip) 
             if ondeath and DONT_DROP then
-                print("CG: Don't drop anything enabled!")
+                print("CG: 死亡不掉落已开启!")
                 if not inst:HasTag("player") then
                     return DoDrop(ondeath, keepequip)
                 else
                     return CGDoDrop(ondeath)
                 end
             end
-            print("CG: Don't drop anything disabled!")
+            print("CG: 死亡不掉落已关闭!")
             return DoDrop(ondeath, keepequip)
         end
     end)
@@ -210,7 +210,7 @@ do
         elseif cmd == 4 then
             KillSpawn(player)
         elseif cmd == -1 then
-            Say(player, 'Command do not exist!\n' .. wtips)
+            Say(player, '你发送的指令不存在!\n' .. wtips)
         end
     end
 end
